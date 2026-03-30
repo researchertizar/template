@@ -301,20 +301,8 @@ input[type=range]::-moz-range-thumb{
 <body>
 
 <div class="layout">
-
-  <!-- LEFT: Canvas preview -->
-  <div class="preview-side">
-    <div class="canvas-wrap" id="canvasWrap">
-      <canvas id="poster" width="1080" height="1080"></canvas>
-      <div class="drag-tip">✦ Drag to reposition photo</div>
-    </div>
-    <p class="canvas-hint">LIVE PREVIEW · 1080 × 1080 PX</p>
-  </div>
-
-  <!-- RIGHT: Controls -->
-  <div class="controls-side">
-
-    <!-- Upload -->
+<div class="controls-side">
+  <!-- Upload -->
     <div class="upload-card">
       <div class="section-label">📸 Upload Your Photo</div>
       <div class="dropzone" id="dropzone">
@@ -329,7 +317,20 @@ input[type=range]::-moz-range-thumb{
       <div class="upload-actions">
         <button class="btn btn-ghost btn-sm" id="clearBtn" style="flex:1">✕ Remove</button>
       </div>
+    </div></div>
+  <!-- LEFT: Canvas preview -->
+  <div class="preview-side">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="poster" width="1080" height="1080"></canvas>
+      <div class="drag-tip">✦ Drag to reposition photo</div>
     </div>
+    <p class="canvas-hint">LIVE PREVIEW · 1080 × 1080 PX</p>
+  </div>
+
+  <!-- RIGHT: Controls -->
+  <div class="controls-side">
+
+    
 
     <!-- Adjust -->
     <div class="adjust-card">
@@ -463,6 +464,9 @@ function loadFile(file) {
       document.getElementById('xSlider').value = 0;
       document.getElementById('ySlider').value = 0;
       updateLabels(); render();
+
+      document.querySelector(".dropzone").style.display = 'none';
+      document.querySelector("#clearBtn").innerHTML = "Re-upload"
     };
     i.src = e.target.result;
   };
@@ -477,6 +481,9 @@ dz.addEventListener('dragleave', () => dz.classList.remove('over'));
 dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); loadFile(e.dataTransfer.files[0]); });
 
 document.getElementById('clearBtn').addEventListener('click', () => {
+  if (dz.style.display == "none"){
+    dz.style.display = "block"
+  }
   userPhoto = null;
   document.getElementById('fileInput').value = '';
   render();
